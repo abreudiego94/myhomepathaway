@@ -148,6 +148,10 @@ This project is a full-stack application that retrieves and displays census data
 
 ---
 
+## Challenges
+
+A major challenge during the development of this application was converting latitude and longitude coordinates into FIPS codes for counties, which are required to fetch accurate census data. The process of mapping geographic coordinates to FIPS codes using the FCC Geolocation API was not straightforward. Ensuring the accuracy of this conversion, especially considering varying levels of precision in geolocation data, required substantial effort in debugging and optimizing the mapping logic to guarantee reliable and precise data retrieval.
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
