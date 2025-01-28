@@ -16,7 +16,7 @@ function useCensusData() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: 'AIzaSyC-5csGO5FhX4qZkTcSgj2rlJc7T4rV1B0', 
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY!, 
     libraries: ['places'],
   });
 

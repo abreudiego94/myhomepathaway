@@ -72,7 +72,7 @@ This project is a full-stack application that retrieves and displays census data
    Create a `.env` file in the `backend` directory with the following:
    ```env
    CENSUS_API_URL=https://api.census.gov/data/2020/acs/acs5
-   CENSUS_API_KEY=888ead3fb3302c10fd3180d8098fe0777be7c2f9
+   CENSUS_API_KEY=YOUR KEY KERE
    FCC_API_URL=https://geo.fcc.gov/api/census/block/find
    ```
 
@@ -100,8 +100,8 @@ This project is a full-stack application that retrieves and displays census data
 3. **Environment Variables**:
    Create a `.env` file in the `frontend` directory with the following:
    ```env
-   REACT_APP_GOOGLE_MAPS_API_KEY=AIzaSyC-5csGO5FhX4qZkTcSgj2rlJc7T4rV1B0
-   REACT_APP_BACKEND_URL=http://localhost:3000
+   REACT_APP_GOOGLE_MAPS_API_KEY="YOUR KEY"
+   REACT_APP_BACKEND_URL="YOUR BACKEND URL"
    ```
 
 4. **Run the React app**:
