@@ -57,7 +57,7 @@ const {
                 }} onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
                 <TextField
                   inputRef={inputRef}
-                  label="Enter location to comapare"
+                  label="Enter location to compare"
                   variant="outlined"
                   fullWidth
                   placeholder="Ex New York"
