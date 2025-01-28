@@ -24,7 +24,7 @@ jobs:
       - name: Deploy to DigitalOcean
         run: |
           ssh -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_SSH_HOST }} << 'EOF'
-            cd /home/deploy/myproject || exit
+            cd /home/project || exit
             git pull origin main || exit
             docker-compose down || exit
             docker-compose up -d --build || exit
