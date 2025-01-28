@@ -1,9 +1,9 @@
 # Etapa 1: Usando a imagem oficial do Node.js baseada em Alpine
 FROM node:20.13.1-alpine 
 
-# Definir o diretório de trabalho dentro do contêiner
 WORKDIR /usr/src/app
 
+COPY .env ./
 
 COPY package*.json ./
 

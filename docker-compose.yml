@@ -21,9 +21,7 @@ services:
     ports:
       - '3001:3001' 
     depends_on:
-      - app  
-    environment:
-      REACT_APP_API_URL: http://app:3000  
+      - app   
     networks:
       - app-network
     restart: always  
