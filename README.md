@@ -59,8 +59,8 @@ This project is a full-stack application that retrieves and displays census data
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/census-data-app.git
-   cd census-data-app/backend
+   git clone hhttps://github.com/abreudiego94/myhomepathaway.git
+   cd myhomepathaway/backend
    ```
 
 2. **Install dependencies**:
