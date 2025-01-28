@@ -1,48 +1,31 @@
-name: Build and Push Docker Image
+name: Deploy to DigitalOcean
+
 on:
   push:
     branches:
-      - main
+      - main  # ou outra branch de sua preferência
 
 jobs:
-  build-and-push:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
+      # 1. Checkout do código
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
+      # 2. Configurar o SSH para acessar o servidor DigitalOcean
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          ssh-private-key: ${{ secrets.DROPLET_SSH_PRIVATE_KEY }}
 
-      - name: Build and Push Docker Image
+      # 3. Conectar ao servidor e realizar o deploy
+      - name: Deploy to DigitalOcean
         run: |
-          docker build -t produtosserveloja/api .
-          docker push produtosserveloja/api
-
-  deploy-to-droplet:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install SSH client
-        run: sudo apt-get install -y openssh-client
-
-      - name: SSH into Droplet, pull image, and run container
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DROPLET_SSH_HOST }}
-          username: ${{ secrets.DROPLET_SSH_USERNAME }}
-          key: ${{ secrets.DROPLET_SSH_PRIVATE_KEY }}
-          port: ${{ secrets.DROPLET_SSH_PORT }}
-          script: |
-            echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-            docker pull produtosserveloja/api
-            docker stop server || true
-            docker rm server || true
-            sudo docker run -d --name server --restart always --network host -p 7071:7071 produtosserveloja/api
-           
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_SSH_HOST }} << 'EOF'
+            cd /home/deploy/myproject || exit
+            git pull origin main || exit
+            docker-compose down || exit
+            docker-compose up -d --build || exit
+          EOF
