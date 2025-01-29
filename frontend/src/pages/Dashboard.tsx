@@ -5,9 +5,15 @@ import { BarChart } from '@mui/x-charts/BarChart';
 import useCensusData from '../hooks/useCensusData';
 import CheckIcon from '@mui/icons-material/Check';
 import { NumericFormat } from 'react-number-format';
+import ReactECharts from 'echarts-for-react';
 
+import * as echarts from 'echarts/core';
 
 function Dashboard() {
+  const labelRight = {
+      position: 'inside'
+  };
+
 const {
     inputRef,
     isLoaded,
@@ -15,14 +21,13 @@ const {
     onPlaceChanged,
     handleSearch,
     state,
-    county,
     incomeData,
     monthlyIncome,
     setMonthlyIncome,
     isLoading,
     error,
   } = useCensusData();
-
+  console.log(incomeData);
   
   if (!isLoaded) return <div>Loading...</div>;
  
@@ -97,35 +102,56 @@ const {
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
           {
-            incomeData && <Card>
-            <CardContent>
-              <BarChart
-                  series={[
-                    { data: [monthlyIncome] },  // Renda do usuário
-                    { data: [incomeData.income] },  // Renda média
-                  ]}
-                  height={290}
-                  xAxis={[
-                    { 
-                      data: [''],  
-                      scaleType: 'band' 
-                    }
-                  ]}
-                  margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
+            incomeData &&
+         
+              <ReactECharts
+                  option={{
+                    tooltip: {
+                      trigger: 'axis',
+                      axisPointer: {
+                        type: 'shadow'
+                      }
+                    },
+                    grid: {
+                      top: 80,
+                      bottom: 30
+                    },
+                    xAxis: {
+                      type: 'value',
+                      position: 'top',
+                      splitLine: {
+                        lineStyle: {
+                          type: 'dashed'
+                        }
+                      }
+                    },
+                    yAxis: {
+                      type: 'category',
+                      data: [
+                        'You',
+                        'Median',
+                      ]
+                    },
+                    series: [
+                      {
+                        name: 'Cost',
+                        type: 'bar',
+                        stack: 'Total',
+                        label: {
+                          show: true,      
+                          formatter: '{b}: ${c}'
+                        },
+                        data: [
+                          { value: monthlyIncome, label: labelRight },
+                          { value: incomeData['income'], label: labelRight },
+                        ]
+                      }
+                    ]
+                  }}
+                  notMerge={true}
+                  lazyUpdate={true}
                 />
-                <div style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', marginRight: 20 }}>
-                    <div style={{ width: 20, height: 20, backgroundColor: '#4CAF50', marginRight: 5 }}></div>
-                    <span>User's Income</span>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div style={{ width: 20, height: 20, backgroundColor: '#2196F3', marginRight: 5 }}></div>
-                    <span>Average Income</span>
-                  </div>
-                </div>
-            </CardContent>
-          </Card>
-          }
+            }
         
         </Grid>
 
