@@ -44,7 +44,7 @@ const {
                    style={{
                     marginBottom: '10px'
                    }}
-                  label="Enter your monthly income"
+                  label="Enter your yearly income"
                   customInput={TextField}
                   variant="outlined"
                   fullWidth
@@ -134,7 +134,7 @@ const {
                     },
                     series: [
                       {
-                        name: 'Cost',
+                        name: 'Yearly income',
                         type: 'bar',
                         stack: 'Total',
                         label: {
