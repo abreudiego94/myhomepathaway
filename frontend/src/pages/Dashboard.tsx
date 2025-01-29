@@ -1,13 +1,10 @@
 
 import { TextField, Card, CardContent, Grid, Button, Alert, CircularProgress } from '@mui/material';
 import { Autocomplete } from '@react-google-maps/api';
-import { BarChart } from '@mui/x-charts/BarChart';
 import useCensusData from '../hooks/useCensusData';
 import CheckIcon from '@mui/icons-material/Check';
 import { NumericFormat } from 'react-number-format';
 import ReactECharts from 'echarts-for-react';
-
-import * as echarts from 'echarts/core';
 
 function Dashboard() {
   const labelRight = {
@@ -27,7 +24,7 @@ const {
     isLoading,
     error,
   } = useCensusData();
-  console.log(incomeData);
+
   
   if (!isLoaded) return <div>Loading...</div>;
  

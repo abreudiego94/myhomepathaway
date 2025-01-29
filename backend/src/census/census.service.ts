@@ -3,7 +3,7 @@ import axios from 'axios';
 
 @Injectable()
 export class CensusService {
-  private readonly censusApiUrl = 'https://api.census.gov/data/2020/acs/acs5';
+  private readonly censusApiUrl = 'https://api.census.gov/data/2023/acs/acs5';
   private readonly apiKey = '888ead3fb3302c10fd3180d8098fe0777be7c2f9';
   private readonly fccApiUrl = 'https://geo.fcc.gov/api/census/block/find';
 
@@ -11,6 +11,8 @@ export class CensusService {
     latitude: number,
     longitude: number,
   ): Promise<string> {
+     console.log(latitude);
+     console.log(longitude);
     try {
       const response = await axios.get(this.fccApiUrl, {
         params: {
@@ -20,6 +22,7 @@ export class CensusService {
           censusYear: 2020,
         },
       });
+      console.log(response.data);
 
       const countyFips = response.data.County?.FIPS;
       if (!countyFips) {
@@ -38,6 +41,7 @@ export class CensusService {
       const countyFIPS = await this.getCountyByCoordinates(lat, lng);
       const stateCode = countyFIPS.slice(0, 2);
       const countyCode = countyFIPS.slice(2); 
+      console.log(countyCode);
 
       const response = await axios.get(this.censusApiUrl, {
         params: {
@@ -47,6 +51,7 @@ export class CensusService {
           key: this.apiKey,
         },
       });
+       console.log(response.config.url);
 
       return response.data;
     } catch (error) {
